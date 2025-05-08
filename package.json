@@ -21,20 +21,19 @@
     "url": "https://github.com/hien1108/nodejs_sinhvien/issues"
   },
   "homepage": "https://github.com/hien1108/nodejs_sinhvien#readme",
-    "lint-staged": {
-      "src/**/*.{js, json, scss}": "--write --single-quote --trailing-comma all --tab-width 4 --write"
-    },
-  
+  "lint-staged": {
+    "src/**/*.{js, json, scss}": "--write --single-quote --trailing-comma all --tab-width 4 --write"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
-
   },
   "description": "",
   "dependencies": {
     "express": "^5.1.0",
-    "express-handlebars": "^8.0.1"
+    "express-handlebars": "^8.0.1",
+    "mongoose": "^8.14.2"
   },
   "devDependencies": {
     "husky": "^9.1.7",
@@ -45,4 +44,3 @@
     "sass": "^1.87.0"
   }
 }
-

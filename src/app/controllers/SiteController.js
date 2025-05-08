@@ -1,7 +1,18 @@
+const Student = require('../models/student');
+
+
 class SiteController {
+    
     //GET /news
     index(req, res) {
-        res.render('home');
+        Student.find({})
+            .then(students => {
+                res.json(students); // hoặc render ra view nếu cần
+        })
+            .catch(err => {
+                res.status(500).send(err.message);
+        });
+        // res.render('home');
     }
 
     //GET /search
@@ -11,3 +22,4 @@ class SiteController {
 }
 
 module.exports = new SiteController();
+

@@ -1,2 +1,14 @@
-
-<h1>HOME PAGE</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Danh sách sinh viên</title>
+</head>
+<body>
+    <h1>Danh sách sinh viên</h1>
+    <ul>
+        <% students.forEach(function(student) { %>
+            <li><%= student.name %> - <%= student.age %> tuổi</li>
+        <% }) %>
+    </ul>
+</body>
+</html>

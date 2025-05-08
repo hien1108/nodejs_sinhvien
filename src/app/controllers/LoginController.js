@@ -1,7 +1,7 @@
-class NewsController {
+class LoginController {
     //GET /news
     index(req, res) {
-        res.render('news');
+        res.render('login');
     }
 
     //GET /news/:slug
@@ -10,4 +10,4 @@ class NewsController {
     }
 }
 
-module.exports = new NewsController();
+module.exports = new LoginController();
