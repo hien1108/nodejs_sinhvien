@@ -7,43 +7,46 @@ const LoginController = {
     console.log('Body:', req.body);
     console.log('Headers:', req.headers);
 
+    // Kiểm tra dữ liệu đầu vào
     if (!req.body || !req.body.studentId || !req.body.password) {
       console.warn('Received invalid request with empty body or missing params');
       return res.status(400).send('Thiếu thông tin đăng nhập');
     }
 
-    const studentId = parseInt(req.body.studentId, 10);
+    // Ép kiểu studentId sang string để khớp với dữ liệu trong MongoDB
+    const studentId = String(req.body.studentId).trim();
     const password = req.body.password;
 
-    if (isNaN(studentId)) {
-      return res.status(400).send('Mã sinh viên không hợp lệ');
-    }
-
     try {
-      console.log("Tìm kiếm user với studentId =", studentId);
+      console.log("🔍 Tìm kiếm user với studentId =", studentId);
+
+      // Tìm user theo studentId (kiểu string)
       const user = await User.findOne({ studentId });
-      console.log("User tìm được:", user);
+
+      console.log("👤 User tìm được:", user);
 
       if (!user || user.password !== password) {
         return res.render('login', { error: 'Mã sinh viên hoặc mật khẩu không đúng.' });
       }
 
+      // Lưu thông tin người dùng vào session
       req.session.user = {
         id: user._id,
         studentId: user.studentId,
         name: user.name
       };
 
-      console.log('Đăng nhập thành công:', user);
+      console.log('✅ Đăng nhập thành công:', user);
       res.redirect('/home');
     } catch (error) {
-      console.error(error);
+      console.error('❌ Lỗi đăng nhập:', error);
       res.status(500).send('Lỗi máy chủ');
     }
   },
 };
 
 module.exports = LoginController;
+
 
 
 

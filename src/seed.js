@@ -8,11 +8,11 @@ const User = require('./app/models/user');
 )
 .then(() => {
 const users = [
-  { studentId: 671417, password: '123456', name: 'Nguyễn Thế Hiển' },
-  { studentId: 671802, password: '234567', name: 'Tạ Hữu Quân' },
-  { studentId: 671123, password: '678910', name: 'Nguyễn Văn An' },
-  { studentId: 671526, password: '671526', name: 'Lê Thị Loan' },
-  { studentId: 671426, password: '671426', name: 'Trần Thị Hiền' }
+  { studentId: '671417', password: '123456', name: 'Nguyễn Thế Hiển' },
+  { studentId: '671802', password: '234567', name: 'Tạ Hữu Quân' },
+  { studentId: '671123', password: '678910', name: 'Nguyễn Văn An' },
+  { studentId: '671526', password: '671526', name: 'Lê Thị Loan' },
+  { studentId: '671426', password: '671426', name: 'Trần Thị Hiền' }
 ];
 return User.insertMany(users);
 })
