@@ -18,6 +18,8 @@ const LoginController = {
     const password = req.body.password;
 
     try {
+      console.log('📩 Từ form:', studentId, password);
+
       console.log("🔍 Tìm kiếm user với studentId =", studentId);
 
       // Tìm user theo studentId (kiểu string)

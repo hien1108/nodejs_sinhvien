@@ -11,16 +11,8 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/login'); // Nếu chưa đăng nhập, chuyển về trang login
 }
 
-// Áp dụng middleware trước khi render trang home
-// router.get('/', ensureAuthenticated, (req, res) => {
-//   res.render('home', { user: req.session.user });  // Truyền thêm user nếu cần hiển thị
-// });
-
-router.get('/home', ensureAuthenticated, (req, res) => {
+router.get('/', ensureAuthenticated, (req, res) => {
   res.render('home', { user: req.session.user });  
 });
-
-// router.use('/search', siteController.search);
-// router.use('/', siteController.index);
 
 module.exports = router;
