@@ -1,9 +1,9 @@
 const loginRouter = require('./login');
-const siteRouter = require('./site');
+const homeRouter = require('./home');
 function route(app) {
     app.use('/login', loginRouter);
 
-    app.use('/', siteRouter);
+    app.use('/home', homeRouter);
 }
 
 module.exports = route;
