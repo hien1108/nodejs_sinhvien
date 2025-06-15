@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const Student = new Schema({
-    name:{type: String, maxlength: 255},
-    age: {type: Number, min: 18, index: true},
-    studentId: {type: String, maxlength: 255},
-    class: {type: String, maxlength: 255},
-    email: {type: String, maxlength: 600},
-    date: {type: Date, default: Date.now}
-  });
+const StudentSchema = new mongoose.Schema({
+  studentId: { type: String, required: true, unique: true},
+  name: { type: String, required: true},
+  dob: Date,
+  gender: String,
+  email: String,
+  phone: String,
+  address: String,
+  class: { type: mongoose.Schema.Types.ObjectId, ref:'Class'}
+});
 
-  module.exports = mongoose.model('Student', Student);
+  module.exports = mongoose.model('Student', StudentSchema);

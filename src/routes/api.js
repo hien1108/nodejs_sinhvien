@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Student = require('../app/models/student');
+const Student = require('../app/models/Student');
 const Teacher = require('../app/models/Teacher');
 
 router.get('/chart-data', async (req, res) => {

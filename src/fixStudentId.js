@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const User = require('./app/models/user'); // sửa lại đường dẫn nếu cần
+const User = require('./app/models/user'); 
 
 async function fixStudentIdType() {
   try {

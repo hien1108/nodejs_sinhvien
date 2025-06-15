@@ -22,6 +22,7 @@ app.use(
     }),
 );
 app.use(express.json());
+app.use('/api',require('./routes/index'));
 
 // Thêm vào middleware
 app.use(session({
@@ -31,8 +32,6 @@ app.use(session({
   cookie: { maxAge: 60 * 60 * 1000 } //tồn tại 1h
 }));
 
-//HTTP logger
-//app.use(morgan('combined'));
 
 //Template engine
 app.engine(
