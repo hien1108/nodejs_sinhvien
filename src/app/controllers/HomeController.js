@@ -5,8 +5,12 @@ class HomeController {
     
     //GET /news
     index(req, res) {
-       
-        res.render('home');
+       const user = req.session.user;
+
+        res.render('home',{
+            layout: 'main',
+            user
+        });
     }
 
 

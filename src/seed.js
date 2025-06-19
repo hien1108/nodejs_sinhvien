@@ -40,8 +40,7 @@ console.log('User data seed')
 const faculties = await Faculty.insertMany([
   { maKhoa: 'CNTT', tenKhoa: 'Công nghệ thông tin'},
   { maKhoa: 'HTTT', tenKhoa: 'Hệ thống thông tin'},
-  { maKhoa: 'KHMT', tenKhoa: 'Khoa học máy tính'},
-  { maKhoa: 'CNPM', tenKhoa: 'Công nghệ phần mềm'}
+  { maKhoa: 'KHMT', tenKhoa: 'Khoa học máy tính'}
 ]);
 console.log('Faculty data seed');
 console.log('Faculty:', faculties.map(f => ({ maKhoa: f.maKhoa, _id: f._id})));
@@ -53,9 +52,7 @@ const classSeed = [
   {maLop: 'HTTTA', tenLop:'Hệ thống thông tin A', faculty: faculties[1]._id},
   {maLop: 'HTTTB', tenLop:'Hệ thống thông tin B', faculty: faculties[1]._id},
   {maLop: 'KHMTA', tenLop:'Khoa học máy tính A', faculty: faculties[2]._id},
-  {maLop: 'KHMTB', tenLop:'Khoa học máy tính B', faculty: faculties[2]._id},
-  {maLop: 'CNPMA', tenLop:'Công nghệ phần mềm A', faculty: faculties[3]._id},
-  {maLop: 'CNPMB', tenLop:'Công nghệ phần mềm B', faculty: faculties[3]._id},
+  {maLop: 'KHMTB', tenLop:'Khoa học máy tính B', faculty: faculties[2]._id}
 ];
 console.log("Class seed preview:", JSON.stringify(classSeed, null, 2));
 const invalidClasses = classSeed.filter(c => !c.maLop);
@@ -117,7 +114,7 @@ const students = await Student.insertMany([
     email: '671426@sv.edu.vn',
     phone: '0978521335',
     address: 'Hải Phòng',
-    class: classes[6]._id
+    class: classes[5]._id
   }
 ]);
 console.log('Student data seed');
@@ -127,7 +124,7 @@ const teachers = await Teacher.insertMany([
   { name: 'Thầy Nguyễn Văn Hùng', major: 'CNTT'},
   { name: 'Cô Nguyễn Thùy linh', major: 'HTTT'},
   { name: 'Thầy Nguyễn Văn Bình', major: 'KHMT'},
-  { name: 'Cô Nguyễn Thị Huệ', major: 'CNPM'}
+  { name: 'Cô Nguyễn Thị Huệ', major: 'CNTT'}
 ]);
 console.log('Teacher data seed')
 

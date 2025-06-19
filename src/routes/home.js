@@ -15,4 +15,5 @@ router.get('/', ensureAuthenticated, (req, res) => {
   res.render('home', { user: req.session.user });  
 });
 
+
 module.exports = router;
