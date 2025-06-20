@@ -23,6 +23,11 @@ app.use(
 );
 app.use(express.json());
 app.use('/api',require('./routes/index'));
+app.use(session({
+    secret: 'your-secret',
+    resave: 'false',
+    saveUninitialized: true
+}));
 
 // Thêm vào middleware
 app.use(session({
@@ -38,10 +43,14 @@ app.engine(
     'hbs',
     handlebars.engine({
         extname: '.hbs',
+        defaultLayout: false,
+        layoutsDir: path.join(__dirname, 'resources', 'views', 'layouts'),
+        partialsDir: path.join(__dirname, 'resources', 'views', 'partials')
     }),
 );
+
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resources\\views'));
+app.set('views', path.join(__dirname, 'resources','views'));
 
 // Sử dụng route
 //app.use('/login', loginRouter);

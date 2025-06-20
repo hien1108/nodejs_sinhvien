@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const siteController = require('../app/controllers/HomeController');
+const homeController = require('../app/controllers/HomeController');
 
 // Middleware kiểm tra đăng nhập
 function ensureAuthenticated(req, res, next) {
@@ -11,9 +11,11 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/login'); // Nếu chưa đăng nhập, chuyển về trang login
 }
 
-router.get('/', ensureAuthenticated, (req, res) => {
-  res.render('home', { user: req.session.user });  
-});
+//Trang chính sau khi đăng nhập
+ router.get('/', ensureAuthenticated, homeController.index); 
+
+//Router lấy nội dung từng partials qua JS
+router.get('/partials/:page', ensureAuthenticated, homeController.partial);
 
 
 module.exports = router;

@@ -27,7 +27,7 @@ router.use('/student', generateRoutes(Student, 'Student'));
 router.use('/subject', generateRoutes(Subject, 'Subject'));
 router.use('/grades', generateRoutes(Grade, 'Grade'));
 
-const classRoute = require('./class');
-router.use('/', classRoute);
+// const classRoute = require('./class');
+// router.use('/', classRoute);
 
 module.exports = route;

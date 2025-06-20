@@ -16,42 +16,42 @@
             </div>
         </div>
         <ul class="nav_list">
-            <li class="menu-item" data-page="trangchu.html">
+            <li class="menu-item" data-page="trangchu">
                 <a href="#">
                     <i class='bx bxs-home'></i>
                     <span class="links_name">Trang chủ</span>
                 </a>
                 <span class="tooltip">Home</span>
             </li>
-            <li class="menu-item" data-page="khoa.html">
+            <li class="menu-item" data-page="khoa">
                 <a href="#">
                     <i class='bx bxs-bank'></i>
                     <span class="links_name">Khoa</span>
                 </a>
                 <span class="tooltip">Faculty</span>
             </li>
-            <li class="menu-item" data-page="lop.html">
+            <li class="menu-item" data-page="lop">
                 <a href="#">
                     <i class='bx bx-table'></i>
                     <span class="links_name">Lớp</span>
                 </a>
                 <span class="tooltip">Class</span>
             </li>
-            <li class="menu-item" data-page="sinhvien.html">
+            <li class="menu-item" data-page="sinhvien">
                 <a href="#">
                     <i class='bx bxs-user'></i>
                     <span class="links_name">Sinh viên</span>
                 </a>
                 <span class="tooltip">Student</span>
             </li>
-            <li class="menu-item" data-page="quanlymonhoc.html">
+            <li class="menu-item" data-page="quanlymonhoc">
                 <a href="#">
                     <i class='bx bxs-folder-open'></i>
                     <span class="links_name">Quản lý môn học</span>
                 </a>
                 <span class="tooltip">Courseware</span>
             </li>
-            <li class="menu-item" data-page="quanlydiem.html">
+            <li class="menu-item" data-page="quanlydiem">
                 <a href="#">
                     <i class='bx bxs-folder-open'></i>
                     <span class="links_name">Quản lý điểm</span>
@@ -62,7 +62,7 @@
         <div class="profile_content">
             <div class="profile">
                 <div class="profile_details">
-                    <img src="../img/user.jpg" alt="User">
+                    <img src="/img/user.jpg" alt="User">
                     <div class="name_job">
                         <div class="name">{{user.name}}</div>
                         <div class="job">Mã SV: {{user.studentId}}</div>
@@ -74,9 +74,19 @@
             </div>
         </div>
     </div>
-    <div id="content-area" class="content-area">
 
+    <div id="content-area" class="content-area">
+        {{{body}}}
     </div>
+
+    {{#if _partial}}
+      {{> (lookup . '_partial') }}
+    {{else}}
+      <p>Không tìm thấy partial!</p>
+    {{/if}}
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/js/main.js"></script>
-</body></html>
+</body>
+</html>
