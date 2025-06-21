@@ -18,4 +18,6 @@ function ensureAuthenticated(req, res, next) {
 router.get('/partials/:page', ensureAuthenticated, homeController.partial);
 
 
+
+
 module.exports = router;

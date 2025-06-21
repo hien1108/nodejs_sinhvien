@@ -16,17 +16,35 @@
 //   });
   
   
-  // XỬ LÝ ĐĂNG XUẤT
-const logoutIcon = document.getElementById('log_out');
-if (logoutIcon) {
-  logoutIcon.addEventListener('click', function () {
-    window.location.href = '/login';
+// ========== ĐĂNG XUẤT ==========
+window.addEventListener('DOMContentLoaded', () => {
+  const logoutIcon = document.getElementById('log_out');
+  if (logoutIcon) {
+    logoutIcon.addEventListener('click', () => {
+      window.location.href = '/login';
+    });
+  }
+
+  attachMenuEvents();       // Gắn menu click
+  loadContent('trangchu');  // Trang mặc định khi vào
+});
+
+// ========== GẮN SỰ KIỆN CHO MENU ==========
+function attachMenuEvents() {
+  document.querySelectorAll(".menu-item").forEach(item => {
+    item.addEventListener("click", function () {
+      const page = this.getAttribute("data-page");
+      loadContent(page);
+    });
   });
 }
 
-// HÀM LOAD NỘI DUNG PARTIAL TỪ SERVER
+// ========== LOAD NỘI DUNG PARTIAL (.hbs từ server) ==========
 function loadContent(page) {
-  fetch(`/home/partials/${page}`)
+  let url = `/home/partials/${page}`;
+  if (page === 'khoa') url = '/khoa'; // Gọi controller nếu là khoa
+
+  fetch(url)
     .then(response => {
       if (!response.ok) throw new Error("Không thể tải nội dung");
       return response.text();
@@ -35,9 +53,10 @@ function loadContent(page) {
       const contentArea = document.getElementById('content-area');
       contentArea.innerHTML = html;
 
-      if (typeof Chart !== 'undefined') {
-        initCharts();
-      }
+      evalScripts(html);     // Chạy script nếu có
+      attachMenuEvents();    // Gắn lại menu nếu DOM thay đổi
+
+      if (typeof Chart !== 'undefined') initCharts();
     })
     .catch(error => {
       console.error("Lỗi khi tải nội dung:", error);
@@ -45,16 +64,23 @@ function loadContent(page) {
     });
 }
 
-// GẮN SỰ KIỆN CHO MENU
-const menuItems = document.querySelectorAll(".menu-item");
-menuItems.forEach(item => {
-  item.addEventListener("click", function () {
-    const page = this.getAttribute("data-page");
-    loadContent(page);
-  });
-});
+// ========== CHẠY SCRIPT CỦA PARTIAL (nếu có) ==========
+function evalScripts(html) {
+  const temp = document.createElement('div');
+  temp.innerHTML = html;
 
-// TẠO BIỂU ĐỒ
+  temp.querySelectorAll('script').forEach(script => {
+    const newScript = document.createElement('script');
+    if (script.src) {
+      newScript.src = script.src;
+    } else {
+      newScript.textContent = script.textContent;
+    }
+    document.body.appendChild(newScript);
+  });
+}
+
+// ========== VẼ BIỂU ĐỒ ==========
 function initCharts() {
   const commonOptions = {
     responsive: true,
@@ -63,9 +89,7 @@ function initCharts() {
       legend: { position: 'top' },
       tooltip: {
         callbacks: {
-          label: function (context) {
-            return `${context.dataset.label}: ${context.raw} người`;
-          }
+          label: ctx => `${ctx.dataset.label}: ${ctx.raw} người`
         }
       }
     }
@@ -88,12 +112,16 @@ function initCharts() {
           max: 6000,
           ticks: {
             stepSize: 1000,
-            callback: value => (value === 6000 ? '≥6000' : value + ' người')
+            callback: val => val === 6000 ? '≥6000' : val + ' người'
           }
         }
       },
       plugins: {
-        title: { display: true, text: 'THỐNG KÊ SINH VIÊN', font: { size: 16 } }
+        title: {
+          display: true,
+          text: 'THỐNG KÊ SINH VIÊN',
+          font: { size: 16 }
+        }
       }
     }
   });
@@ -115,30 +143,27 @@ function initCharts() {
           max: 100,
           ticks: {
             stepSize: 20,
-            callback: value => (value === 100 ? '≥100' : value + ' người')
+            callback: val => val === 100 ? '≥100' : val + ' người'
           }
         }
       },
       plugins: {
-        title: { display: true, text: 'THỐNG KÊ GIÁO VIÊN', font: { size: 16 } }
+        title: {
+          display: true,
+          text: 'THỐNG KÊ GIÁO VIÊN',
+          font: { size: 16 }
+        }
       }
     }
   });
 }
 
-// HỖ TRỢ VẼ CHART
+// ========== HỖ TRỢ VẼ CHART ==========
 function createChart(id, config) {
   const canvas = document.getElementById(id);
   if (!canvas) return;
 
-  if (canvas.chart) {
-    canvas.chart.destroy();
-  }
-
+  if (canvas.chart) canvas.chart.destroy();
   canvas.chart = new Chart(canvas.getContext('2d'), config);
 }
 
-// KHỞI TẠO TRANG MẶC ĐỊNH
-window.addEventListener('DOMContentLoaded', () => {
-  loadContent('trangchu');
-});

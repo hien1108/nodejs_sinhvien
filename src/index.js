@@ -1,7 +1,10 @@
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
-const handlebars = require('express-handlebars');
+const { engine } = require('express-handlebars');
+const Handlebars = require('handlebars');
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+
 const session = require('express-session');
 // const loginRouter = require('./routes/login');
 // const homeRouter = require('./routes/home');
@@ -41,9 +44,10 @@ app.use(session({
 //Template engine
 app.engine(
     'hbs',
-    handlebars.engine({
+    engine({
         extname: '.hbs',
         defaultLayout: false,
+        handlebars: allowInsecurePrototypeAccess(Handlebars),
         layoutsDir: path.join(__dirname, 'resources', 'views', 'layouts'),
         partialsDir: path.join(__dirname, 'resources', 'views', 'partials')
     }),

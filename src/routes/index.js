@@ -1,6 +1,7 @@
 const loginRouter = require('./login');
 const homeRouter = require('./home');
 const apiRouter = require('./api');
+const facultyRouter = require('./faculty');
 function route(app) {
     app.use('/login', loginRouter);
 
@@ -8,6 +9,8 @@ function route(app) {
 
     app.use('/api', router);
     app.use('/api', apiRouter);
+
+    app.use('/khoa', facultyRouter);
 }
 
 const express = require('express');

@@ -19,9 +19,22 @@
                 <th>Hành động</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+            {{#each faculties}}
+                <tr>
+                    <td>{{this.maKhoa}}</td>
+                    <td>{{this.tenKhoa}}</td>
+                    <td>
+                        <button onclick="editKhoa('{{this._id}}', '{{this.maKhoa}}', '{{this.tenKhoa}}')">Sửa</button>
+                        <button onclick="deleteKhoa('{{this._id}}')">Xóa</button>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
     </table>
 </div>
+
+<!-- Modal thêm sửa khoa -->
 <div id="khoaModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -47,5 +60,8 @@
         </form>
     </div>
 </div>
+
+<script src="/js/khoa.js"></script>
+
 
 
