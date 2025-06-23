@@ -11,6 +11,7 @@
             </button>
         </div>
     </div>
+
     <table class="data-table" id="subjectTable">
         <thead>
             <tr>
@@ -20,9 +21,34 @@
                 <th>Thao tác</th>
             </tr>
         </thead>
-        <tbody></tbody>
-    </table>
+        <tbody id="subjectTableBody">
+            {{#each subjects}}
+            <tr>
+                <td>{{this.maMon}}</td>
+                <td>{{this.tenMon}}</td>                <td>{{this.tinChi}}</td>
+                <td>
+                    <button class="btn-edit" onclick="openSubjectModal('{{this._id}}', '{{this.maMon}}', '{{this.tenMon}}', '{{this.tinChi}}')">
+                        <i class='bx bx-edit'></i> Sửa
+                    </button>
+                    <button class="btn-delete" onclick="deleteSubject('{{this._id}}')">
+                        <i class='bx bx-trash'></i> Xóa
+                    </button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>    </table>
 </div>
+
+<!-- Toast notification -->
+<div id="toast" class="toast">
+    <span id="toastMessage"></span>
+</div>
+
+<!-- Loading spinner -->
+<div id="loadingSpinner" class="loading-spinner">
+    <div class="spinner"></div>
+</div>
+
 <div id="subjectModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -38,12 +64,11 @@
                 <div class="form-group">
                     <label for="tenSubject">Tên Môn học</label>
                     <input type="text" id="tenSubject" required>
-                </div>
-                <div class="form-group">
+                </div>                <div class="form-group">
                     <label for="soTinChi">Số tín chỉ</label>
                     <input type="number" id="soTinChi" required min="1" max="10">
                 </div>
-                <input type="hidden" id="editingSubjectRowIndex">
+                <input type="hidden" id="editingSubjectId">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-cancel" onclick="closeSubjectModal()">Hủy</button>
@@ -52,3 +77,6 @@
         </form>
     </div>
 </div>
+
+{{!-- Xóa script cũ để tránh load 2 lần --}}
+{{!-- <script src="/js/subject.js"></script> --}}

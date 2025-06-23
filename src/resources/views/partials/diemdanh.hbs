@@ -1,0 +1,137 @@
+<div class="attendance-management">
+    <div class="attendance-header">
+        <h2>Quản lý Điểm danh</h2>
+        <div class="header-actions">
+            <div class="search-box">
+                <input type="text" id="searchAttendance" placeholder="Tìm kiếm theo mã SV, tên, lớp...">
+                <i class='bx bx-search'></i>
+            </div>
+            <div class="date-filter">
+                <label for="filterDate">Ngày:</label>
+                <input type="date" id="filterDate">
+            </div>            <div class="class-filter">
+                <label for="filterClass">Lớp:</label>
+                <select id="filterClass">
+                    <option value="">Tất cả lớp</option>
+                    {{#each classes}}
+                    <option value="{{this._id}}">{{this.tenLop}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <button class="btn-clear" onclick="clearFilters()" title="Xóa bộ lọc">
+                <i class='bx bx-refresh'></i> Xóa lọc
+            </button>
+            <button class="btn-add" onclick="openAttendanceModal()">
+                <i class='bx bx-plus'></i> Điểm Danh
+            </button>
+        </div>
+    </div>
+
+    <table class="data-table" id="attendanceTable">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Ngày</th>
+                <th>Lớp</th>
+                <th>Mã SV</th>
+                <th>Tên SV</th>
+                <th>Trạng thái</th>
+                <th>Ghi chú</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody id="attendanceTableBody">
+            {{#each attendanceRecords}}
+            <tr>
+                <td>{{@index}}</td>
+                <td>{{formatDate this.date}}</td>
+                <td>{{this.class.tenLop}}</td>
+                <td>{{this.student.studentId}}</td>
+                <td>{{this.student.name}}</td>
+                <td>
+                    <span class="attendance-status {{this.status}}">
+                        {{#if (eq this.status "present")}}Có mặt{{/if}}
+                        {{#if (eq this.status "absent")}}Vắng{{/if}}
+                        {{#if (eq this.status "late")}}Đi muộn{{/if}}
+                    </span>
+                </td>
+                <td>{{this.note}}</td>
+                <td>
+                    <button class="btn-edit" onclick="openAttendanceModal('{{this._id}}', '{{this.date}}', '{{this.class._id}}', '{{this.student._id}}', '{{this.status}}', '{{this.note}}')">
+                        <i class='bx bx-edit'></i> Sửa
+                    </button>
+                    <button class="btn-delete" onclick="deleteAttendance('{{this._id}}')">
+                        <i class='bx bx-trash'></i> Xóa
+                    </button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div id="attendanceModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="attendanceModalTitle">Điểm Danh Sinh Viên</h3>
+            <span class="close" onclick="closeAttendanceModal()"><i class='bx bx-x'></i></span>
+        </div>
+        <form id="attendanceForm">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="attendanceDate">Ngày</label>
+                    <input type="date" id="attendanceDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="attendanceClass">Lớp</label>
+                    <select id="attendanceClass" required>
+                        <option value="">-- Chọn lớp --</option>
+                        {{#each classes}}
+                        <option value="{{this._id}}">{{this.tenLop}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="attendanceStudent">Sinh viên</label>
+                    <select id="attendanceStudent" required>
+                        <option value="">-- Chọn sinh viên --</option>
+                        {{#each students}}
+                        <option value="{{this._id}}">{{this.studentId}} - {{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Trạng thái</label>
+                    <div class="status-options">
+                        <label><input type="radio" name="attendanceStatus" value="present" checked> Có mặt</label>
+                        <label><input type="radio" name="attendanceStatus" value="absent"> Vắng</label>
+                        <label><input type="radio" name="attendanceStatus" value="late"> Đi muộn</label>
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label for="attendanceNote">Ghi chú</label>
+                    <textarea id="attendanceNote" rows="3" placeholder="Nhập ghi chú (tùy chọn)"></textarea>
+                </div>
+                <input type="hidden" id="editingAttendanceId">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="closeAttendanceModal()">Hủy</button>
+                <button type="submit" class="btn-save">Lưu</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Toast notification -->
+<div id="toast" class="toast">
+    <span id="toastMessage"></span>
+</div>
+
+<!-- Loading spinner -->
+<div id="loadingSpinner" class="loading-spinner">
+    <div class="spinner"></div>
+</div>
+
+{{!-- Xóa script cũ để tránh load 2 lần --}}
+{{!-- <script src="/js/diemdanh.js"></script> --}}

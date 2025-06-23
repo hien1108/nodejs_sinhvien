@@ -8,6 +8,7 @@ const StudentSchema = new mongoose.Schema({
   email: String,
   phone: String,
   address: String,
+  maKhoa: { type: mongoose.Schema.Types.ObjectId, ref: 'Faculty' },
   class: { type: mongoose.Schema.Types.ObjectId, ref:'Class'}
 });
 

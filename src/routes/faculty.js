@@ -5,10 +5,13 @@ const FacultyController = require('../app/controllers/FacultyController');
 
 //kiểm tra đăng nhập
 function ensureAuthenticated(req, res, next) {
-    if(req.session && req.session.user) return next();
-    res.redirect('/login');
+	if (req.session && req.session.user) return next();
+	res.redirect('/login');
 }
 
 router.get('/', ensureAuthenticated, FacultyController.index);
+router.post('/create', ensureAuthenticated, FacultyController.create);
+router.post('/update/:id', ensureAuthenticated, FacultyController.update);
+router.delete('/delete/:id', ensureAuthenticated, FacultyController.delete);
 
 module.exports = router;

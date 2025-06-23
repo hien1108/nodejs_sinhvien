@@ -11,6 +11,7 @@
             </button>
         </div>
     </div>
+
     <table class="data-table" id="classTable">
         <thead>
             <tr>
@@ -18,10 +19,35 @@
                 <th>Tên lớp</th>
                 <th>Thao tác</th>
             </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+        </thead>        <tbody id="classTableBody">
+            {{#each classes}}
+            <tr>
+                <td>{{this.maLop}}</td>
+                <td>{{this.tenLop}}</td>
+                <td>
+                    <button class="btn-edit" onclick="openClassModal('{{this._id}}', '{{this.maLop}}', '{{this.tenLop}}')">
+                        <i class='bx bx-edit'></i> Sửa
+                    </button>
+                    <button class="btn-delete" onclick="deleteClass('{{this._id}}')">
+                        <i class='bx bx-trash'></i> Xóa
+                    </button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody></table>
 </div>
+
+<!-- Toast notification -->
+<div id="toast" class="toast">
+    <span id="toastMessage"></span>
+</div>
+
+<!-- Loading spinner -->
+<div id="loadingSpinner" class="loading-spinner">
+    <div class="spinner"></div>
+</div>
+
+<!-- Modal thêm/sửa -->
 <div id="classModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -44,6 +70,8 @@
                 <button type="button" class="btn-cancel" onclick="closeClassModal()">Hủy</button>
                 <button type="submit" class="btn-save">Lưu</button>
             </div>
-        </form>
-    </div>
+        </form>    </div>
 </div>
+
+{{!-- Xóa script cũ để tránh load 2 lần --}}
+{{!-- <script src="/js/class.js"></script> --}}

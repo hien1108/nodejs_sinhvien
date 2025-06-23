@@ -24,15 +24,57 @@
                 <th>Email</th>
                 <th>SĐT</th>
                 <th>Địa chỉ</th>
-                <th>Ảnh</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
-        <tbody>
-            </tbody>
-    </table>
+        <tbody id="studentTableBody">
+            {{#each students}}
+                <tr>
+                    <td>{{this.studentId}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.dob}}</td>
+                    <td>{{this.gender}}</td>
+                    <td>{{this.maKhoa.tenKhoa}}</td>
+                    <td>{{this.class.tenLop}}</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.phone}}</td>
+                    <td>{{this.address}}</td>
+                    <td>
+                        <button class="btn-edit"
+                            onclick="openStudentModal(
+                                '{{this._id}}',
+                                '{{this.studentId}}',
+                                '{{this.name}}',
+                                '{{this.dob}}',
+                                '{{this.gender}}',
+                                '{{this.maKhoa._id}}',
+                                '{{this.class._id}}',
+                                '{{this.email}}',
+                                '{{this.phone}}',
+                                '{{this.address}}'
+                            )">
+                            <i class='bx bx-edit'></i> Sửa
+                        </button>
+                        <button class="btn-delete" onclick="deleteStudent('{{this._id}}')">
+                            <i class='bx bx-trash'></i> Xóa
+                        </button>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>    </table>
 </div>
 
+<!-- Toast notification -->
+<div id="toast" class="toast">
+    <span id="toastMessage"></span>
+</div>
+
+<!-- Loading spinner -->
+<div id="loadingSpinner" class="loading-spinner">
+    <div class="spinner"></div>
+</div>
+
+<!-- Modal thêm/sửa sinh viên -->
 <div id="studentModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -41,58 +83,66 @@
         </div>
         <form id="studentForm">
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="maSV">Mã Sinh viên</label>
-                    <input type="text" id="maSV" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="studentId">Mã Sinh viên</label>
+                        <input type="text" id="studentId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentName">Tên Sinh viên</label>
+                        <input type="text" id="studentName" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="tenSV">Tên Sinh viên</label>
-                    <input type="text" id="tenSV" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="studentDob">Ngày sinh</label>
+                        <input type="date" id="studentDob">
+                    </div>
+                    <div class="form-group">
+                        <label for="studentGender">Giới tính</label>
+                        <select id="studentGender">
+                            <option value="">Chọn giới tính</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="ngaySinh">Ngày sinh</label>
-                    <input type="date" id="ngaySinh" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="studentFaculty">Khoa</label>
+                        <select id="studentFaculty">
+                            <option value="">Chọn khoa</option>
+                            {{#each faculties}}
+                            <option value="{{this._id}}">{{this.tenKhoa}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentClass">Lớp</label>
+                        <select id="studentClass">
+                            <option value="">Chọn lớp</option>
+                            {{#each classes}}
+                            <option value="{{this._id}}">{{this.tenLop}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Giới tính</label>
-                    <div>
-                        <input type="radio" id="gioiTinhNam" name="gioiTinh" value="Nam" required>
-                        <label for="gioiTinhNam" class="radio-label">Nam</label>
-                        <input type="radio" id="gioiTinhNu" name="gioiTinh" value="Nữ">
-                        <label for="gioiTinhNu" class="radio-label">Nữ</label>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="studentEmail">Email</label>
+                        <input type="email" id="studentEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="studentPhone">Số điện thoại</label>
+                        <input type="tel" id="studentPhone">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="khoaSV">Khoa</label>
-                    <select id="khoaSV" required>
-                        </select>
+                    <label for="studentAddress">Địa chỉ</label>
+                    <textarea id="studentAddress" rows="3"></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="lopSV">Lớp</label>
-                    <select id="lopSV" required>
-                        </select>
-                </div>
-                <div class="form-group">
-                    <label for="emailSV">Email</label>
-                    <input type="email" id="emailSV" required>
-                </div>
-                <div class="form-group">
-                    <label for="sdtSV">Số điện thoại</label>
-                    <input type="tel" id="sdtSV" pattern="[0-9]{10,11}" placeholder="VD: 0123456789" required>
-                </div>
-                <div class="form-group">
-                    <label for="diaChiSV">Địa chỉ</label>
-                    <input type="text" id="diaChiSV" required>
-                </div>
-                <div class="form-group">
-                    <label for="anhSV">Ảnh đại diện</label>
-                    <input type="file" id="anhSV" accept="/img/OIP.jpg">
-                    <div id="imagePreview" style="margin-top: 10px; text-align: center;">
-                        <img src="" alt="Ảnh đại diện" style="max-width: 100px; max-height: 100px; border-radius: 5px; display: none;">
-                    </div>
-                </div>
-                <input type="hidden" id="editingStudentRowIndex">
-                <input type="hidden" id="currentStudentImage"> </div>
+                <input type="hidden" id="editingStudentId">
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn-cancel" onclick="closeStudentModal()">Hủy</button>
                 <button type="submit" class="btn-save">Lưu</button>
@@ -100,3 +150,6 @@
         </form>
     </div>
 </div>
+
+{{!-- Xóa script cũ để tránh load 2 lần --}}
+{{!-- <script src="/js/student.js"></script> --}}

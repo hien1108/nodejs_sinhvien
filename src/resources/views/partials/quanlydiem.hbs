@@ -1,70 +1,109 @@
-<div class="score-management">
-    <div class="score-header">
+<div class="grade-management">
+    <div class="grade-header">
         <h2>Quản lý Điểm</h2>
         <div class="header-actions">
             <div class="search-box">
-                <input type="text" id="searchScore" placeholder="Tìm kiếm theo mã SV, tên môn...">
+                <input type="text" id="searchGrade" placeholder="Tìm kiếm theo mã SV, tên SV, môn học...">
                 <i class='bx bx-search'></i>
             </div>
-            <button class="btn-add" onclick="openScoreModal()">
+            <button class="btn-add" onclick="openGradeModal()">
                 <i class='bx bx-plus'></i> Thêm Điểm
             </button>
         </div>
     </div>
 
-    <table class="data-table" id="scoreTable">
+    <table class="data-table" id="gradeTable">
         <thead>
             <tr>
                 <th>Mã SV</th>
                 <th>Tên SV</th>
                 <th>Mã MH</th>
                 <th>Tên MH</th>
-                <th>Điểm GK</th>
+                <th>Điểm QT</th>
                 <th>Điểm Thi</th>
                 <th>Điểm TK</th>
                 <th>Xếp loại</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody id="gradeTableBody">
+            {{#each grades}}
+            <tr>
+                <td>{{this.student.studentId}}</td>
+                <td>{{this.student.name}}</td>
+                <td>{{this.subject.maMon}}</td>
+                <td>{{this.subject.tenMon}}</td>
+                <td>{{this.diemQT}}</td>
+                <td>{{this.diemThi}}</td>
+                <td>{{this.diemTK}}</td>
+                <td>{{this.xepLoai}}</td>
+                <td>
+                    <button class="btn-edit" onclick="openGradeModal('{{this._id}}', '{{this.student._id}}', '{{this.subject._id}}', '{{this.diemQT}}', '{{this.diemThi}}')">
+                        <i class='bx bx-edit'></i> Sửa
+                    </button>
+                    <button class="btn-delete" onclick="deleteGrade('{{this._id}}')">
+                        <i class='bx bx-trash'></i> Xóa
+                    </button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
     </table>
 </div>
 
-<div id="scoreModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 id="scoreModalTitle">Thêm Điểm</h3>
-            <span class="close" onclick="closeScoreModal()"><i class='bx bx-x'></i></span>
-        </div>
-        <form id="scoreForm">
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="maSVScore">Mã Sinh viên</label>
-                    <select id="maSVScore" required>
-                        <option value="">-- Chọn Sinh viên --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="maMHScore">Mã Môn học</label>
-                    <select id="maMHScore" required>
-                        <option value="">-- Chọn Môn học --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="diemGK">Điểm Giữa kì</label>
-                    <input type="number" id="diemQT" min="0" max="10" step="0.1" required>
-                </div>
-                <div class="form-group">
-                    <label for="diemThi">Điểm Thi</label>
-                    <input type="number" id="diemThi" min="0" max="10" step="0.1" required>
-                </div>
-                <input type="hidden" id="editingScoreRowIndex">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-cancel" onclick="closeScoreModal()">Hủy</button>
-                <button type="submit" class="btn-save">Lưu</button>
-            </div>
-        </form>
+<!-- Modal -->
+<div id="gradeModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="gradeModalTitle">Thêm Điểm</h3>
+      <span class="close" onclick="closeGradeModal()"><i class='bx bx-x'></i></span>
     </div>
+    <form id="gradeForm">
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="studentSelect">Sinh viên</label>
+          <select id="studentSelect" required>
+            <option value="">-- Chọn Sinh viên --</option>
+            {{#each students}}
+            <option value="{{this._id}}">{{this.studentId}} - {{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="subjectSelect">Môn học</label>
+          <select id="subjectSelect" required>
+            <option value="">-- Chọn Môn học --</option>
+            {{#each subjects}}
+            <option value="{{this._id}}">{{this.maMon}} - {{this.tenMon}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="diemQTInput">Điểm Quá trình</label>
+          <input type="number" id="diemQTInput" min="0" max="10" step="0.1" required>
+        </div>
+        <div class="form-group">
+          <label for="diemThiInput">Điểm Thi</label>
+          <input type="number" id="diemThiInput" min="0" max="10" step="0.1" required>
+        </div>
+        <input type="hidden" id="editingGradeId">
+      </div>
+      <div class="modal-footer">        <button type="button" class="btn-cancel" onclick="closeGradeModal()">Hủy</button>
+        <button type="submit" class="btn-save">Lưu</button>
+      </div>
+    </form>
+  </div>
 </div>
-<script src="script.js"></script>
+
+<!-- Toast notification -->
+<div id="toast" class="toast">
+    <span id="toastMessage"></span>
+</div>
+
+<!-- Loading spinner -->
+<div id="loadingSpinner" class="loading-spinner">
+    <div class="spinner"></div>
+</div>
+
+{{!-- Xóa script cũ để tránh load 2 lần --}}
+{{!-- <script src="/js/grade.js"></script> --}}

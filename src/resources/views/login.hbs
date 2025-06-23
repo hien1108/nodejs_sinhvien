@@ -3,37 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý sinh viên</title>
+    <title>Đăng nhập - Hệ thống quản lý sinh viên</title>
     <link rel="stylesheet" href="/css/login.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    <div class="login-container">
-        <div class="logo">
-            <img src="/img/vnua-1.png" alt="Logo Học Viện Nông Nghiệp Việt Nam">
-            
+    <div class="login-container">        <div class="logo">
+            <img src="/img/logo-vnua.png" alt="Học viện Nông nghiệp Việt Nam">
         </div>
         <form id="login-form" method="POST" action="/login">
             <div class="input-group">
-                <label for="studentId">Mã sinh viên</label>
-                <input type="text" id="studentId" name="studentId" required>
+                <label for="teacherId"><i class='bx bxs-user'></i> Mã giáo viên</label>
+                <input type="text" id="teacherId" name="teacherId" required placeholder="Nhập mã giáo viên">
             </div>
             <div class="input-group">
-                <label for="password">Mật khẩu</label>
-                <input type="password" id="password" name="password" required>
+                <label for="password"><i class='bx bxs-lock-alt'></i> Mật khẩu</label>
+                <input type="password" id="password" name="password" required placeholder="Nhập mật khẩu">
             </div>
             <div class="remember-me">
-                <label for="remember">
-                    <input type="checkbox" id="remember" name="remember">
-                    <span class="remember-text">Lưu tài khoản</span>
-                </label>
+                <input type="checkbox" id="remember" name="remember" style="width: auto;">
+                <label for="remember" class="remember-text">Lưu tài khoản</label>
             </div>
-            <button type="submit">ĐĂNG NHẬP</button>
+            <button type="submit">
+                <i class='bx bxs-log-in'></i> Đăng nhập
+            </button>
         </form>
         {{#if error}}
-    <p style="color: red; text-align: center; margin-top: 10px;">{{error}}</p>
+            <div class="error-message">
+                <i class='bx bxs-error'></i> {{error}}
+            </div>
         {{/if}}
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/js/login.js"></script>
 </body>
 </html>

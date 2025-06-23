@@ -3,7 +3,7 @@
         <h2>Quản lý Khoa</h2>
         <div class="header-actions">
             <div class="search-box">
-                <input type="text" id="searchKhoa" placeholder="Tìm kiếm theo mã hoặc tên khoa...">
+                <input type="text" id="searchKhoa" placeholder="Tìm kiếm theo mã hoặc tên khoa..." value="{{searchTerm}}">
                 <i class='bx bx-search'></i>
             </div>
             <button class="btn-add" onclick="openKhoaModal()">
@@ -11,6 +11,13 @@
             </button>
         </div>
     </div>
+
+    <!-- Loading spinner -->
+    <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+        <i class='bx bx-loader-alt bx-spin'></i>
+        <span>Đang xử lý...</span>
+    </div>
+
     <table class="data-table" id="khoaTable">
         <thead>
             <tr>
@@ -18,8 +25,7 @@
                 <th>Tên Khoa</th>
                 <th>Hành động</th>
             </tr>
-        </thead>
-        <tbody>
+        </thead>        <tbody id="facultyTableBody">
             {{#each faculties}}
                 <tr>
                     <td>{{this.maKhoa}}</td>
@@ -32,6 +38,14 @@
             {{/each}}
         </tbody>
     </table>
+</div>
+
+<!-- Toast notification -->
+<div id="toast" class="toast">
+    <div class="toast-content">
+        <i class="toast-icon"></i>
+        <span class="toast-message"></span>
+    </div>
 </div>
 
 <!-- Modal thêm sửa khoa -->
@@ -57,11 +71,5 @@
                 <button type="button" class="btn-cancel" onclick="closeKhoaModal()">Hủy</button>
                 <button type="submit" class="btn-save">Lưu</button>
             </div>
-        </form>
-    </div>
+        </form>    </div>
 </div>
-
-<script src="/js/khoa.js"></script>
-
-
-

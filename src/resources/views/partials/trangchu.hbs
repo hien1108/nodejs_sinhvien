@@ -1,49 +1,89 @@
-<div id="content-area" class="content-area">
-    <h1 class="page-title">Trang chủ</h1>
-    <section class="dashboard">
-        <div class="card blue">
-            <div class="card-body">
-                <div class="card-count">1</div>
-                <div class="card-title">Khoa</div>
-                <div class="card-icon"><i class="bx bxs-bank"></i></div>
+<h1 class="page-title">
+    <i class='bx bxs-home'></i> Dashboard
+</h1>
+
+<section class="dashboard">
+    <div class="card blue">
+        <div class="card-body">
+            <div class="card-count">{{facultyCount}}</div>
+            <div class="card-title">Khoa</div>
+            <div class="card-icon"><i class="bx bxs-bank"></i></div>
+        </div>
+    </div>
+    <div class="card green">
+        <div class="card-body">
+            <div class="card-count">{{classCount}}</div>
+            <div class="card-title">Lớp</div>
+            <div class="card-icon"><i class="bx bx-table"></i></div>
+        </div>
+    </div>
+    <div class="card orange">
+        <div class="card-body">
+            <div class="card-count">{{studentCount}}</div>
+            <div class="card-title">Sinh viên</div>
+            <div class="card-icon"><i class="bx bxs-user"></i></div>
+        </div>
+    </div>
+    <div class="card red">
+        <div class="card-body">
+            <div class="card-count">{{subjectCount}}</div>
+            <div class="card-title">Môn học</div>
+            <div class="card-icon"><i class="bx bxs-folder-open"></i></div>
+        </div>
+    </div>
+</section>
+
+<div class="row" style="margin-top: 30px;">
+    <div class="col-md-8">
+        <section class="charts-section">
+            <div class="chart-container">
+                <h3><i class='bx bxs-chart'></i> Biểu đồ thống kê</h3>
+                <canvas id="studentGenderChart"></canvas>
             </div>
-        </div>
-        <div class="card green">
-            <div class="card-body">
-                <div class="card-count">2</div>
-                <div class="card-title">Lớp</div>
-                <div class="card-icon"><i class="bx bx-table"></i></div>
-            </div>
-        </div>
-        <div class="card orange">
-            <div class="card-body">
-                <div class="card-count">3</div>
-                <div class="card-title">Sinh viên</div>
-                <div class="card-icon"><i class="bx bxs-user"></i></div>
-            </div>
-        </div>
-        <div class="card red">
-            <div class="card-body">
-                <div class="card-count">4</div>
-                <div class="card-title">Môn học</div>
-                <div class="card-icon"><i class="bx bxs-folder-open"></i></div>
-            </div>
-        </div>
-    </section>
-    <section class="charts-section">
-        <div class="chart-container">
-            <canvas id="studentGenderChart"></canvas>
-        </div>
-        <div class="chart-container">
-            <canvas id="teacherGenderChart"></canvas>
-        </div>
-    </section>
-    <section class="notifications">
-        <h2>Thông báo</h2>
-        <ul class="notification-list" id="notificationList"></ul>
-    </section>
-    <section class="calendar">
-        <h2>Sự kiện sắp tới</h2>
-        <ul class="event-list" id="eventList"></ul>
-    </section>
+        </section>
+    </div>    <div class="col-md-4">
+        <section class="notifications">
+            <h3 style="color: orangered;"><i class='bx bxs-bell'></i> Thông báo mới nhất</h3>
+            <ul class="notification-list">
+                <li>
+                    <div class="notification-date">07/09/2025:</div>
+                    <div class="notification-content">Thông báo tuyển sinh dạo tạo liên kết đề gia hạn năm 2025</div>
+                </li>
+                <li>
+                    <div class="notification-date">07/09/2025:</div>
+                    <div class="notification-content">Kết luận nghiệm cau linh năm 2025</div>
+                </li>
+                <li>
+                    <div class="notification-date">16/09/2025:</div>
+                    <div class="notification-content">Thông báo thu học phí năm học kì năm 2025</div>
+                </li>
+                <li>
+                    <div class="notification-date">16/09/2025:</div>
+                    <div class="notification-content">Thông báo thu học phí, phí dịch vụ nghiep cau ành</div>
+                </li>
+                <li>
+                    <div class="notification-date">21/09/2025:</div>
+                    <div class="notification-content">Đông thi nguyen vong hop học kì năm 2025</div>
+                </li>
+            </ul>
+            <a href="#" class="view-all-link">Xem chi tiết ></a>
+
+            <h3 style="margin-top: 30px; color: orangered;"><i class='bx bxs-calendar'></i> Sự kiện sắp tới</h3>
+            <ul class="event-list">
+                <li>
+                    <div class="event-date">09/09/2025:</div>
+                    <div class="event-content">Ngày hội việc làm năm 2025</div>
+                </li>
+                <li>
+                    <div class="event-date">07/09/2025:</div>
+                    <div class="event-content">Kì năm 7T năm chính thức thần liên tiên Thú</div>
+                </li>
+                <li>
+                    <div class="event-date">10-18/09/2025:</div>
+                    <div class="event-content">Festival học, cấp chính VNUA 2025</div>
+                </li>
+            </ul>
+            <a href="#" class="view-all-link">Xem chi tiết ></a>
+        </section>
+    </div>
 </div>
